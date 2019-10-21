@@ -72,7 +72,7 @@ mysql_password = os.environ['PETROL_PRICES_MYSQL_PASSWORD']
 
 
 eng = create_engine(
-    f'mysql://{mysql_username}:{mysql_password}@127.0.0.1:1234/petrolprices')
+    f'mysql://{mysql_username}:{mysql_password}@127.0.0.1/petrolprices')
 
 df = get_petrol_prices(email, password, 'unleaded')
 df.to_sql('petrolprices', eng, if_exists='append', index=False)
