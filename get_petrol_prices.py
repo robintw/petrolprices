@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
+from sqlalchemy import create_engine
 
 def get_petrol_prices(email, password, fuel_type):
     options = Options()
@@ -66,6 +67,14 @@ def get_petrol_prices(email, password, fuel_type):
 
 email = os.environ['PETROL_PRICES_EMAIL']
 password = os.environ['PETROL_PRICES_PASSWORD']
+mysql_username = os.environ['PETROL_PRICES_MYSQL_USERNAME']
+mysql_password = os.environ['PETROL_PRICES_MYSQL_PASSWORD']
+
+
+eng = create_engine(
+    f'mysql://{mysql_username}:{mysql_password}@127.0.0.1:1234/petrolprices')
 
 df = get_petrol_prices(email, password, 'unleaded')
+df.to_sql('petrolprices', eng, if_exists='append', index=False)
+
 print(df)
