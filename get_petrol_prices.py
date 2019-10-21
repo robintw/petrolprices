@@ -1,5 +1,6 @@
 import time
 import os
+from datetime import datetime
 
 import pandas as pd
 
@@ -57,7 +58,7 @@ def get_petrol_prices(email, password, fuel_type):
 
         data.append({'name': name,
                     'price': price,
-                    'updated_date': updated_date,
+                    'updated_date': datetime.strptime(updated_date, '%d/%m/%Y'),
                     'fuel_type': fuel_type})
 
     df = pd.DataFrame(data)
