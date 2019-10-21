@@ -78,4 +78,5 @@ eng = create_engine(
 df = get_petrol_prices(email, password, 'unleaded')
 df.to_sql('petrolprices', eng, if_exists='append', index=False)
 
-print(df)
+df = get_petrol_prices(email, password, 'diesel')
+df.to_sql('petrolprices', eng, if_exists='append', index=False)
