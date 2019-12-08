@@ -59,7 +59,8 @@ def get_petrol_prices(email, password, fuel_type):
         data.append({'name': name,
                     'price': price,
                     'updated_date': datetime.strptime(updated_date, '%d/%m/%Y'),
-                    'fuel_type': fuel_type})
+                    'fuel_type': fuel_type,
+		    'timestamp': datetime.now()})
 
     df = pd.DataFrame(data)
 
@@ -73,7 +74,7 @@ mysql_password = os.environ['PETROL_PRICES_MYSQL_PASSWORD']
 
 
 eng = create_engine(
-    f'mysql://{mysql_username}:{mysql_password}@127.0.0.1/petrolprices')
+    f'mysql+pymysql://{mysql_username}:{mysql_password}@127.0.0.1/petrolprices')
 
 df = get_petrol_prices(email, password, 'unleaded')
 df.to_sql('petrolprices', eng, if_exists='append', index=False)
